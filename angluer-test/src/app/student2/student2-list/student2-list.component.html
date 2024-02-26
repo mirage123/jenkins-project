@@ -1,0 +1,28 @@
+<table class="table table-striped table-inverse table-responsive">
+    <thead class="thead-inverse">
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Department</th>
+            <th>image</th>
+            <th>Operations</th>
+        </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of studentsList">
+                <td>{{item._id}}</td>
+                <td>{{item.name}}</td>
+                <td>{{item.department}}</td>
+                <td>{{item.image}}</td>
+                <td>
+                    <button class="btn btn-danger p-1" (click)="Delete(item._id)">Delete</button>
+                    <a routerLink="/students/details/{{item._id}}" class="btn btn-info p-1" >Details</a>
+                    <a routerLink="/students/edit/{{item._id}}" class="btn btn-success p2" (click)="sendEditedStdInfo(item._id,item.name,item.image)" >Edit</a>
+
+                </td>
+            </tr>
+
+        </tbody>
+</table>
+
+<a routerLink="/students/add" class="btn btn-dark">Add Student</a>

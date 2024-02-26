@@ -1,0 +1,29 @@
+<a [routerLink]="['/students/add']" routerLinkActive="router-link-active" >Add Student</a>
+<table class="table table-striped table-inverse table-responsive">
+    <thead class="thead-inverse">
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Age</th>
+        </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of studentsList">
+                <td>{{item.id}}</td>
+                <td>{{item.name}}</td>
+                <td>{{item.age}}</td>
+                <td>
+                    <!-- <button (click)="onDetails(item.id)">Details</button> -->
+                    <a [routerLink]="['/students','details',item.id]" routerLinkActive="router-link-active" >Details</a>
+                    <button (click)="onDelete(item.id)" >Delete</button>
+                    <button (click)="onEdit(item.id)" >Edit</button>
+                </td>
+                
+            </tr>
+        </tbody>
+</table>
+<router-outlet></router-outlet>
+<!-- <app-student-details [studentId]="studentId" *ngIf="x"></app-student-details> -->
+<!-- <app-add-student></app-add-student> -->
+<hr>
+<!-- <app-edit-student [currentID]="editStudentId" ></app-edit-student> -->

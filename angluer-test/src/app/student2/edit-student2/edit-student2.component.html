@@ -1,0 +1,12 @@
+<div>
+    <!-- <input type="text" [(ngModel)]="id" disabled> -->
+    <input type="text" [(ngModel)]="editedStudent.name" placeholder="name">
+    <!-- <input type="text" [(ngModel)]="editedStudent.department"> -->
+    <select [(ngModel)]="deptId" >
+        <option value="{{item._id}}" *ngFor="let item of DeptList" >
+            {{item.name}}
+        </option>
+    </select>
+    <input type="text" [(ngModel)]="editedStudent.image" placeholder="image">
+    <button (click)="save()" class="btn btn-success">Save</button>
+</div>

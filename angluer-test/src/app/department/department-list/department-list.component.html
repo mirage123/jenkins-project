@@ -1,0 +1,29 @@
+
+<table class="table table-striped table-inverse table-responsive">
+    <thead class="thead-inverse">
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Location</th>
+            <th >Operations</th>
+        </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of departmentList">
+                <td>{{item._id}}</td>
+                <td>{{item.name}}</td>
+                <td>{{item.location}}</td>
+                <td> 
+                    <a routerLink="/departments/details/{{item._id}}" class="btn btn-info">Details</a>
+                    <a routerLink="/departments/edit/{{item._id}}" class="btn btn-success"  (click)="sendId(item._id)" >Edit</a>
+                    <button class="btn btn-danger" (click)="delete(item._id)">Delete</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    
+<a routerLink="/departments/add" routerLinkActive="router-link-active" class="btn btn-dark">Add Department</a>
+
+<!-- <p>department-list works!</p>
+    <a [routerLink]="['/departments','add']" routerLinkActive="router-link-active" >Add Department</a>
+<a [routerLink]="['/departments','details']" routerLinkActive="router-link-active" >Department Details</a> -->

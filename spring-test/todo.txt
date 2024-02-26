@@ -1,0 +1,30 @@
+stage('Compile') {
+            steps {
+                sh "mvn compile"
+            }
+        }
+
+        stage('Unit tests') {
+            steps {
+                sh "mvn test -DskipTests=true"
+            }
+        }
+
+        stage('Owasp Dependency check') {
+            steps {
+                dependencyCheck additionalArguments: '--scan ./', odcInstallation: 'dependency-check'
+                dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
+            }
+        }
+
+        stage('Build') {
+            steps {
+                sh "mvn package -DskipTests=true"
+            }
+        }
+
+        stage('Archive JAR') {
+            steps {
+                archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true
+            }
+        }

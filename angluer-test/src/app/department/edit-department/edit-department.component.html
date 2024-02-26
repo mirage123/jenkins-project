@@ -1,0 +1,6 @@
+<div>
+    <input type="text" [(ngModel)] = "editedDept._id"  disabled>
+    <input type="text" [(ngModel)] = "editedDept.name" placeholder="name">
+    <input type="text" [(ngModel)] = "editedDept.location" placeholder="location">
+    <button (click)="save()" class="btn btn-success">Save</button>
+</div>

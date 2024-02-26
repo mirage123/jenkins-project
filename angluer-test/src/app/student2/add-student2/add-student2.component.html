@@ -1,0 +1,14 @@
+<div>
+    <input type="text" [(ngModel)]="newStudent._id" placeholder="id">
+    <input type="text" [(ngModel)]="newStudent.name" placeholder="name">
+    <!-- <input type="text" [(ngModel)]="newStudent.department"> -->
+
+    <select [(ngModel)]="deptId" >
+        <option value="{{item._id}}" *ngFor="let item of DeptList" >
+            {{item.name}} 
+        </option>
+    </select>
+
+    <input type="text" [(ngModel)]="newStudent.image" placeholder="image">
+    <button  class="btn btn-primary  btn-block" (click)="save()">Add</button>
+</div>

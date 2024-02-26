@@ -1,0 +1,6 @@
+<div class="alert alert-success" role="alert" *ngIf="detailsFlag">
+    <h4 class="alert-heading">Course Details</h4>
+    <p>{{ courseDetailsTemp | json}}</p>
+    <button (click)="swtich()">Close dtails</button>
+
+</div>

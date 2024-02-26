@@ -1,0 +1,30 @@
+
+<div id="page" align="center">
+    <div id="content" style="width:800px">
+        
+        <app-header></app-header>
+
+            <!-- <a routerLink="/home">Home</a>|
+            <a routerLink="/contact">Contact</a>| -->
+            <a routerLink="/departments">Departments</a>|
+            <a routerLink="/students">Students</a>|
+            <a routerLink="/abcd" routerLinkActive="active1" >Not Found Page</a>|
+            <a routerLink="/aboutus">AboutUS</a>
+            <hr>
+            
+        <div id="contenttext">
+                
+            <div style="padding:10px">
+                <span class="titletext">Welcome to ITI !</span>
+            </div>
+
+            <!-- <app-course-list></app-course-list> -->
+            <router-outlet></router-outlet> 
+            
+        </div>
+
+        <app-sidebar></app-sidebar>
+        <app-footer></app-footer>
+        
+    </div>
+</div>
