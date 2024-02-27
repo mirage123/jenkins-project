@@ -40,12 +40,15 @@ pipeline{
                  when { expression {  params.action == 'create' } }
 
                     steps{
-                       script{
-                           mvnCompile(
-                           dir : "spring-test"
-                           )
-
-                       }
+                        dir('spring-test'){
+                        sh "mvn compile"
+                        }
+//                        script{
+//                            mvnCompile(
+//                            dir : "spring-test"
+//                            )
+//
+//                        }
                     }
                 }
          stage('Unit Test maven'){
