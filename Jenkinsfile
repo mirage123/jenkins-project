@@ -30,7 +30,7 @@ pipeline{
             gitCheckout(
 
                 branch: env.BRANCH_NAME,
-                url: "https://github.com/mirage123/spring-test1.git"
+                url: "https://github.com/mirage123/jenkins-project.git"
             )
             sh 'ls -la'
             }
