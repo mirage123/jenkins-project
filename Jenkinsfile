@@ -123,9 +123,9 @@ pipeline{
                        script{
 
                            mvnBuild(dir : "spring-test")
-                           def fullPath = sh(script: "ls target/*.war", returnStdout: true).trim()
+                           def fullPath = sh(script: "ls **/target/*.war", returnStdout: true).trim()
                            WAR_FILE = fullPath.tokenize('/').last()
-                                               echo "JAR file is ${WAR_FILE}"
+                                               echo "WAR file is ${WAR_FILE}"
                        }
                     }
                     post{
