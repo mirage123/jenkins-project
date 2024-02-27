@@ -39,8 +39,8 @@ pipeline{
             steps {
                 script {
                     // Now that the code is checked out, we can check for changes
-                    boolean adminFrontendChanged = changesDetected('angluer-test/')
-                    boolean adminBackend = changesDetected('spring-test/')
+                    boolean adminFrontendChanged = changesDetected(projectPath : 'angluer-test/')
+                    boolean adminBackend = changesDetected(projectPath: 'spring-test/')
                     if (adminFrontendChanged) {
                         echo '::: Changes in angular frontend admin'
                         // Add your steps for ProjectA here
