@@ -12,14 +12,16 @@ pipeline{
             // Define a variable to hold the JAR file name
             JAR_FILE = ""
             WAR_FILE = ""
+            adminFrontendChanged = false
+            adminBackendChanged = false
+            adminFrontend = "angluer-test"
+            adminBackend = "spring-test"
+            
         }
 
     parameters{
 
         choice(name: 'action', choices: 'create\ndelete', description: 'Choose create/Destroy')
-        string(name: 'ImageName', description: "name of the docker build", defaultValue: 'javapp')
-        string(name: 'ImageTag', description: "tag of the docker build", defaultValue: 'v1')
-        string(name: 'DockerHubUser', description: "name of the Application", defaultValue: 'vikashashoke')
     }
 
     stages{
@@ -28,11 +30,26 @@ pipeline{
             steps{
             echo "::: GIT CHECKOUT GOING TO HAPPEN ${env.BRANCH_NAME}"
             gitCheckout(
-
                 branch: env.BRANCH_NAME,
                 url: "https://github.com/mirage123/jenkins-project.git"
             )
-            sh 'ls -la'
+            }
+        }
+        stage('Check for Project Changes') {
+            steps {
+                script {
+                    // Now that the code is checked out, we can check for changes
+                    boolean adminFrontendChanged = changesDetected('angluer-test/')
+                    boolean adminBackend = changesDetected('spring-test/')
+                    if (adminFrontendChanged) {
+                        echo '::: Changes in angular frontend admin'
+                        // Add your steps for ProjectA here
+                    }
+                    if (adminBackend) {
+                        echo '::: Changes in spring backend admin'
+                        // Add your steps for ProjectB here
+                    }
+                }
             }
         }
 
@@ -78,26 +95,6 @@ pipeline{
                     }
                 }
 
-        stage('Static code analysis: Sonarqube'){
-         when { expression {  params.action == 'delete' } }
-            steps{
-               script{
-                   
-                   def SonarQubecredentialsId = 'sonarqube-api'
-                   statiCodeAnalysis(SonarQubecredentialsId)
-               }
-            }
-        }
-        stage('Quality Gate Status Check : Sonarqube'){
-         when { expression {  params.action == 'delete' } }
-            steps{
-               script{
-                   
-                   def SonarQubecredentialsId = 'sonarqube-api'
-                   QualityGateStatus(SonarQubecredentialsId)
-               }
-            }
-        }
         stage('JAR MAVEN BUILD'){
          when { expression {  params.action == 'delete' } }
             steps{
@@ -201,41 +198,9 @@ pipeline{
                 }
             }
         }
-        stage('Docker Image Build'){
-         when { expression {  params.action == 'delete' } }
-            steps{
-               script{
-                   
-                   dockerBuild("${params.ImageName}","${params.ImageTag}","${params.DockerHubUser}")
-               }
-            }
-        }
-         stage('Docker Image Scan: trivy '){
-         when { expression {  params.action == 'delete' } }
-            steps{
-               script{
-                   
-                   dockerImageScan("${params.ImageName}","${params.ImageTag}","${params.DockerHubUser}")
-               }
-            }
-        }
-        stage('Docker Image Push : DockerHub '){
-         when { expression {  params.action == 'delete' } }
-            steps{
-               script{
-                   
-                   dockerImagePush("${params.ImageName}","${params.ImageTag}","${params.DockerHubUser}")
-               }
-            }
-        }   
-        stage('Docker Image Cleanup : DockerHub '){
-         when { expression {  params.action == 'delete' } }
-            steps{
-               script{
-                   
-                   dockerImageCleanup("${params.ImageName}","${params.ImageTag}","${params.DockerHubUser}")
-               }
-            }
-        }      
+
+
+
+
     }
 }
