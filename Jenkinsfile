@@ -12,8 +12,6 @@ pipeline{
             // Define a variable to hold the JAR file name
             JAR_FILE = ""
             WAR_FILE = ""
-            adminFrontendChanged = false
-            adminBackendChanged = false
             adminFrontend = "angluer-test"
             adminBackend = "spring-test"
             
@@ -37,12 +35,11 @@ pipeline{
         }
 
         stage('COMPILE MAVEN'){
-
                  when { expression {  params.action == 'create' } }
 
                     steps{
                        script{
-                           mvnCompile(dir : "spring-test")
+                           mvnCompile(dir : adminFrontend)
 
                        }
                     }
@@ -53,7 +50,7 @@ pipeline{
 
             steps{
                script{
-               mvnTest(dir : "spring-test")
+               mvnTest(dir : adminFrontend)
                }
             }
         }
@@ -63,7 +60,7 @@ pipeline{
                script{
 
                    script{
-                      mvnIntegrationTest(dir : "spring-test")
+                      mvnIntegrationTest(dir : adminFrontend)
 
                   }
                }
@@ -102,8 +99,9 @@ pipeline{
                     steps{
                        script{
 
-                           mvnBuild(dir : "spring-test")
+                           mvnBuild(dir : adminFrontend)
                            def fullPath = sh(script: "ls **/target/*.war", returnStdout: true).trim()
+
                            WAR_FILE = fullPath.tokenize('/').last()
                                                echo "WAR file is ${WAR_FILE}"
                        }
@@ -158,6 +156,11 @@ pipeline{
                     }
                     else if (env.BRANCH_NAME == 'qa') {
                         echo 'Deploying to QA server...'
+                        deployWARToWindows(
+                            contextPath: '',
+                            url: "http://103.187.8.39:8010/",
+                            war: '**/*.war'
+                         )
                         // Add your deployment steps for QA server here
                     }
                 }
