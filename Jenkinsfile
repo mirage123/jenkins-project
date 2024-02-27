@@ -40,10 +40,11 @@ pipeline{
                  when { expression {  params.action == 'create' } }
 
                     steps{
-                    dir('spring-test') {
                        script{
-                           mvnCompile()
-                       }
+                           mvnCompile(
+                           dir : "spring-test"
+                           )
+
                        }
                     }
                 }
