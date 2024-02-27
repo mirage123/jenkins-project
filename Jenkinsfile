@@ -26,6 +26,7 @@ pipeline{
         stage('Git Checkout'){
                     when { expression {  params.action == 'create' } }
             steps{
+            echo "::: GIT CHECKOUT HAPPENING ${env.BRANCH_NAME}"
             gitCheckout(
 
                 branch: env.BRANCH_NAME,
