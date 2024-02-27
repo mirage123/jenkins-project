@@ -38,7 +38,7 @@ pipeline{
         stage('Check for Project Changes') {
             steps {
                 script {
-                    gitDiffOutput = sh(script: "git diff --name-only HEAD HEAD~1 | grep '^angluer-test/'", returnStdout: true).trim()
+                    sh(script: "git diff --name-only HEAD HEAD~1 | grep '^angluer-test/'", returnStdout: true).trim()
                     echo "::: Changes in angular frontend admin"
 
                 }
