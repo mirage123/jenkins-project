@@ -39,7 +39,7 @@ pipeline{
 
                     steps{
                        script{
-                           mvnCompile(dir : adminFrontend)
+                           mvnCompile(dir : adminBackend)
 
                        }
                     }
@@ -50,7 +50,7 @@ pipeline{
 
             steps{
                script{
-               mvnTest(dir : adminFrontend)
+               mvnTest(dir : adminBackend)
                }
             }
         }
@@ -60,7 +60,7 @@ pipeline{
                script{
 
                    script{
-                      mvnIntegrationTest(dir : adminFrontend)
+                      mvnIntegrationTest(dir : adminBackend)
 
                   }
                }
@@ -99,7 +99,7 @@ pipeline{
                     steps{
                        script{
 
-                           mvnBuild(dir : adminFrontend)
+                           mvnBuild(dir : adminBackend)
                            def fullPath = sh(script: "ls **/target/*.war", returnStdout: true).trim()
 
                            WAR_FILE = fullPath.tokenize('/').last()
