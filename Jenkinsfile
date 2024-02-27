@@ -41,18 +41,10 @@ pipeline{
                  when { expression {  params.action == 'create' } }
 
                     steps{
+                       script{
+                           mvnCompile(dir : "spring-test")
 
-                        dir('spring-test'){
-                        sh 'pwd'
-                        sh 'ls -la'
-                        sh "mvn compile"
-                        }
-//                        script{
-//                            mvnCompile(
-//                            dir : "spring-test"
-//                            )
-//
-//                        }
+                       }
                     }
                 }
          stage('Unit Test maven'){
@@ -61,7 +53,7 @@ pipeline{
 
             steps{
                script{
-                   mvnTest()
+               mvnTest(dir : "spring-test")
                }
             }
         }
@@ -69,8 +61,11 @@ pipeline{
          when { expression {  params.action == 'create' } }
             steps{
                script{
-                   
-                   mvnIntegrationTest()
+
+                   script{
+                      mvnIntegrationTest(dir : "spring-test")
+
+                  }
                }
             }
         }
@@ -127,7 +122,7 @@ pipeline{
                     steps{
                        script{
 
-                           mvnBuild()
+                           mvnBuild(dir : "spring-test")
                            def fullPath = sh(script: "ls target/*.war", returnStdout: true).trim()
                            WAR_FILE = fullPath.tokenize('/').last()
                                                echo "JAR file is ${WAR_FILE}"
