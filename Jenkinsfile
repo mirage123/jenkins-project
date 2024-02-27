@@ -32,6 +32,7 @@ pipeline{
                 branch: env.BRANCH_NAME,
                 url: "https://github.com/mirage123/spring-test1.git"
             )
+            sh 'ls -la'
             }
         }
 
@@ -40,7 +41,10 @@ pipeline{
                  when { expression {  params.action == 'create' } }
 
                     steps{
+
                         dir('spring-test'){
+                        sh 'pwd'
+                        sh 'ls -la'
                         sh "mvn compile"
                         }
 //                        script{
