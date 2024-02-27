@@ -38,17 +38,9 @@ pipeline{
         stage('Check for Project Changes') {
             steps {
                 script {
-                    // Now that the code is checked out, we can check for changes
-                    boolean adminFrontendChanged = changesDetected(projectPath : 'angluer-test/')
-                    boolean adminBackend = changesDetected(projectPath: 'spring-test/')
-                    if (adminFrontendChanged) {
-                        echo '::: Changes in angular frontend admin'
-                        // Add your steps for ProjectA here
-                    }
-                    if (adminBackend) {
-                        echo '::: Changes in spring backend admin'
-                        // Add your steps for ProjectB here
-                    }
+                    gitDiffOutput = sh(script: "git diff --name-only HEAD HEAD~1 | grep '^angluer-test/'", returnStdout: true).trim()
+                    echo "::: Changes in angular frontend admin ${gitDiffOutput}"
+
                 }
             }
         }
