@@ -34,7 +34,6 @@ pipeline{
             }
         }
 
-
         stage('COMPILE MAVEN'){
 
                  when { expression {  params.action == 'create' } }
