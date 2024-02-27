@@ -35,15 +35,6 @@ pipeline{
             )
             }
         }
-        stage('Check for Project Changes') {
-            steps {
-                script {
-                    sh(script: "git diff --name-only HEAD HEAD~1 | grep '^angluer-test/'", returnStdout: true).trim()
-                    echo "::: Changes in angular frontend admin"
-
-                }
-            }
-        }
 
         stage('COMPILE MAVEN'){
 
@@ -56,8 +47,8 @@ pipeline{
                        }
                     }
                 }
+
          stage('Unit Test maven'){
-         
          when { expression {  params.action == 'create' } }
 
             steps{
